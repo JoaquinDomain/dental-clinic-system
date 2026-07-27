@@ -9,22 +9,21 @@ require_once 'database_logic.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['check_status'])) {
     $reference = trim($_POST['reference'] ?? '');
-    $mobile = trim($_POST['mobile'] ?? '');
 
-    if ($reference && $mobile) {
+    if ($reference) {
         $conn = getDbConnection();
         if ($conn) {
             try {
-                // PDO Prepared Statement
-                $stmt = $conn->prepare("SELECT * FROM appointments WHERE reference_no = ? AND mobile_number = ?");
-                $stmt->execute([$reference, $mobile]);
+                // PDO Prepared Statement - Querying strictly by reference_no
+                $stmt = $conn->prepare("SELECT * FROM appointments WHERE reference_no = ?");
+                $stmt->execute([$reference]);
                 
                 if ($stmt->rowCount() > 0) {
                     $appointment = $stmt->fetch();
                     $message = 'Appointment found!';
                     $messageType = 'success';
                 } else {
-                    $message = 'No appointment found with this reference number and mobile number.';
+                    $message = 'No appointment found with this reference number.';
                     $messageType = 'error';
                 }
             } catch (PDOException $e) {
@@ -32,13 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['check_status'])) {
                 $message = 'An error occurred while fetching your appointment. Please try again.';
                 $messageType = 'error';
             }
-            // PDO connections close automatically, so no $conn->close() is needed.
         } else {
             $message = 'Database connection error. Please try again.';
             $messageType = 'error';
         }
     } else {
-        $message = 'Please enter both reference number and mobile number.';
+        $message = 'Please enter your reference number.';
         $messageType = 'error';
     }
 }
@@ -195,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['check_status'])) {
     <div class="container">
         <div class="header">
             <h1>📋 Check Appointment Status</h1>
-            <p>Enter your reference number and mobile number</p>
+            <p>Enter your reference number below</p>
         </div>
 
         <div class="card">
@@ -247,10 +245,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['check_status'])) {
                     <div class="form-group">
                         <label for="reference">Reference Number</label>
                         <input type="text" id="reference" name="reference" placeholder="e.g. DCS-20260607-AB12" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile">Mobile Number</label>
-                        <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" required>
                     </div>
                     <button type="submit" name="check_status" class="btn-submit">Check Status</button>
                 </form>

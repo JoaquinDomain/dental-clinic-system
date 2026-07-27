@@ -105,8 +105,8 @@ $clinic_address = 'MX94+7H6, BBB St, Bacolod, 6100 Negros Occidental'; // clinic
             <h3>How to use:</h3>
             <ol>
                 <li>Scan this QR code</li>
-                <li>Enter your info in form</li>
-                <li>Select date of appointment</li>
+                <li>Enter your Info in Form</li>
+                <li>Select Date of Appointment</li>
                 <li>Check Appointment Status</li>
             </ol>
         </div>

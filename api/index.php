@@ -230,7 +230,7 @@ if ($selectedDate) {
 
             <div class="action-buttons">
                 <a href="tel:+1234567890" class="btn-action btn-call">📞 Call</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=Dental+Clinic" target="_blank" class="btn-action btn-location">📍 Location</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=bacolod+city+health" target="_blank" class="btn-action btn-location">📍 Location</a>
                 <a href="qr.php" class="btn-action btn-qr">📱 QR Code</a>
             </div>
         </div>
